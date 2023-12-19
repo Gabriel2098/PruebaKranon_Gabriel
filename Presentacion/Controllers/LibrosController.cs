@@ -28,15 +28,17 @@ namespace Presentacion.Controllers
         }
 
         // PUT api/<LibrosController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{condicion}")]
+        public void Put(string condicion, Libros libro)
         {
+            nLibros.UpdateLibro(condicion, libro);
         }
 
         // DELETE api/<LibrosController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{condicion}")]
+        public void Delete(string condicion)
         {
+            nLibros.DeleteLibro(condicion);
         }
     }
 }

@@ -20,5 +20,15 @@ namespace Negocio
         {
             dLibros.AddLibro(libro);
         }
+
+        public void UpdateLibro(string condicion, Libros libro)
+        {
+            dLibros.UpdateLibro(condicion, libro);
+        }
+
+        public void DeleteLibro(string condicion)
+        {
+            dLibros.DeleteLibro(condicion);
+        }
     }
 }
