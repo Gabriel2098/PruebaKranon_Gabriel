@@ -11,24 +11,29 @@ namespace Negocio
     public class NLibros
     {
         public DLibros dLibros = new DLibros();
+
+        public List<Libros> GetLibros()
+        {
+            return dLibros.GetLibros();
+        }
         public List<Libros> GetLibros(string condicion)
         {
             return dLibros.GetLibros(condicion);
         }
 
-        public void AddLibro(Libros libro)
+        public string AddLibro(Libros libro)
         {
-            dLibros.AddLibro(libro);
+            return dLibros.AddLibro(libro);
         }
 
-        public void UpdateLibro(string condicion, Libros libro)
+        public string UpdateLibro(string condicion, Libros libro)
         {
-            dLibros.UpdateLibro(condicion, libro);
+            return dLibros.UpdateLibro(condicion, libro);
         }
 
-        public void DeleteLibro(string condicion)
+        public string DeleteLibro(string condicion)
         {
-            dLibros.DeleteLibro(condicion);
+            return dLibros.DeleteLibro(condicion);
         }
     }
 }

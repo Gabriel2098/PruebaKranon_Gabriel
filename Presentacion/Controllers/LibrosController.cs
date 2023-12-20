@@ -11,10 +11,15 @@ namespace Presentacion.Controllers
     public class LibrosController : ControllerBase
     {
         NLibros nLibros = new NLibros();
-        
+
+        [HttpGet]
+        public List<Libros> Get()
+        {
+            return nLibros.GetLibros();
+        }
 
         // GET api/<LibrosController>/5
-        [HttpGet]
+        [HttpGet("{condicion}")]
         public List<Libros> Get(string condicion)
         {
             return nLibros.GetLibros(condicion);
@@ -22,23 +27,23 @@ namespace Presentacion.Controllers
 
         // POST api/<LibrosController>
         [HttpPost]
-        public void Post(Libros libro)
+        public string Post(Libros libro)
         {
-            nLibros.AddLibro(libro);
+            return nLibros.AddLibro(libro);
         }
 
         // PUT api/<LibrosController>/5
         [HttpPut("{condicion}")]
-        public void Put(string condicion, Libros libro)
+        public string Put(string condicion, Libros libro)
         {
-            nLibros.UpdateLibro(condicion, libro);
+            return nLibros.UpdateLibro(condicion, libro);
         }
 
         // DELETE api/<LibrosController>/5
         [HttpDelete("{condicion}")]
-        public void Delete(string condicion)
+        public string Delete(string condicion)
         {
-            nLibros.DeleteLibro(condicion);
+            return nLibros.DeleteLibro(condicion);
         }
     }
 }

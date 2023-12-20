@@ -25,6 +25,11 @@ namespace Datos
             _lstLibros = JsonConvert.DeserializeObject<List<Libros>>(_json);
         }
 
+        public List<Libros> GetLibros()
+        {
+            return _lstLibros;
+        }
+
         public List<Libros> GetLibros(string condicion)
         {
             _json = "";
@@ -41,7 +46,7 @@ namespace Datos
                 {
                     var bookName = _lstLibros.FindAll(x => x.BookName == condicion);
                     var author = _lstLibros.FindAll(x => x.Author == condicion);
-                    _lstResult = bookName != null ? _lstResult : _lstResult.Concat(bookName).ToList<Libros>();
+                    _lstResult = bookName == null ? _lstResult : _lstResult.Concat(bookName).ToList<Libros>();
                     _lstResult = author == null ? _lstResult : _lstResult.Concat(author).ToList<Libros>();
                 }
                 return _lstResult;
@@ -68,7 +73,7 @@ namespace Datos
             }
         }
 
-        public void AddLibro(Libros libro)
+        public string AddLibro(Libros libro)
         {
             try
             {
@@ -77,19 +82,20 @@ namespace Datos
                 _json = JsonConvert.SerializeObject(_lstLibros);
                 _archivoWrite.WriteLine($"{_json}");
                 _archivoWrite.Close();
+                return "Libro añadido con exito";
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                return $"Hubo un error en la inserción: {ex.Message}";
             }
         }
 
-        public void UpdateLibro(string condicion, Libros libroUpdate)
+        public string UpdateLibro(string condicion, Libros libroUpdate)
         {
             try
             {
                 _libro = GetLibro(condicion, 0);
-                if (_libro == null) return;
+                if (_libro == null) return "Elemento no encontrado para actualizar";
                 _libro.BookName = libroUpdate.BookName;
                 _libro.Author = libroUpdate.Author;
                 _libro.ReleaseDate = libroUpdate.ReleaseDate;
@@ -97,28 +103,30 @@ namespace Datos
                 _archivoWrite = new StreamWriter("BDLibros.json");
                 _archivoWrite.WriteLine($"{_json}");
                 _archivoWrite.Close();
+                return "Actualizado correctamente";
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                return $"Hubo un error en la actualización: {ex.Message}";
             }
         }
 
-        public void DeleteLibro(string condicion)
+        public string DeleteLibro(string condicion)
         {
             try
             {
                 _libro = GetLibro(condicion);
-                if (_libro == null) return;
+                if (_libro == null) return "Elemento no encontrado para eliminar"; ;
                 _lstLibros.Remove(_libro); 
                 _json = JsonConvert.SerializeObject(_lstLibros);
                 _archivoWrite = new StreamWriter("BDLibros.json");
                 _archivoWrite.WriteLine($"{_json}");
                 _archivoWrite.Close();
+                return "Eliminado correctamente";
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                return $"Hubo un error en la actualización: {ex.Message}";
             }
         }
     }
